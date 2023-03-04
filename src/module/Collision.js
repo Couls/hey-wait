@@ -30,11 +30,10 @@ export default class Collision {
   checkTileTokenCollision(tile, token, initTokenPos) {
     // 1. Get all the tile's vertices. X and Y are position at top-left corner
     // of tile.
-    const tileX1 = tile.data.x;
-    const tileY1 = tile.data.y;
-    const tileX2 = tile.data.x + tile.data.width;
-    const tileY2 = tile.data.y + tile.data.height;
-
+    const tileX1 = tile.x;
+    const tileY1 = tile.y;
+    const tileX2 = tile.x + tile.width;
+    const tileY2 = tile.y + tile.height;
     const tokenCanvasWidth = token.data.width * this.gridSize;
     const tokenCanvasHeight = token.data.height * this.gridSize;
 
@@ -42,7 +41,6 @@ export default class Collision {
     const tokenY1 = initTokenPos.y + (tokenCanvasHeight / 2);
     const tokenX2 = token.data.x + (tokenCanvasWidth / 2);
     const tokenY2 = token.data.y + (tokenCanvasHeight / 2);
-
     // 2. Create a new Ray for the token, from its starting position to its
     // destination.
     const tokenRay = new Ray(
@@ -59,6 +57,30 @@ export default class Collision {
     // 3. Create four intersection checks, one for each line making up the
     // tile rectangle. If any of these pass, that means it has intersected at
     // some point.
+    console.debug(Boolean(tokenRay.intersectSegment([
+      tileX1,
+      tileY1,
+      tileX2,
+      tileY1,
+    ]))
+      || Boolean(tokenRay.intersectSegment([
+        tileX2,
+        tileY1,
+        tileX2,
+        tileY2,
+      ]))
+      || Boolean(tokenRay.intersectSegment([
+        tileX2,
+        tileY2,
+        tileX1,
+        tileY2,
+      ]))
+      || Boolean(tokenRay.intersectSegment([
+        tileX1,
+        tileY2,
+        tileX1,
+        tileY1,
+      ])));
     return Boolean(tokenRay.intersectSegment([
       tileX1,
       tileY1,

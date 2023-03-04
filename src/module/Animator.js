@@ -56,6 +56,8 @@ export default class Animator {
     sprite.position.x = x;
     sprite.position.y = y;
     sprite.name = Math.random().toString(36).substring(16);
+    sprite.elevation = 0;
+    sprite.sort = 200;
 
     const child = this.layer.addChild(sprite);
 

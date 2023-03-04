@@ -77,12 +77,12 @@ export default class TokenUpdateCoordinator {
       this._cleanQueuedTokenInitPos(tokenDoc.id);
       return;
     }
-
+    console.debug('Checking if triggered tile...');
     const triggeredTile = await this.triggeringHandler.handleTileTriggering(
       tiles,
       tokenDoc,
       initPos,
-      tokenDoc.parent.id,
+      tokenDoc.parent._id,
     );
 
     if (triggeredTile) {

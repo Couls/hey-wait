@@ -35,7 +35,7 @@ export default class PostTriggerActions {
     await this.gameChanger.pan(coords);
 
     // 3. Handle the relevant reaction if one's defined.
-    const animType = tile.data?.flags?.['hey-wait']?.animType
+    const animType = tile.flags['hey-wait']?.animType
       ?? Constants.DEFAULT_ANIM_TYPE;
 
     this
