@@ -25,16 +25,13 @@ import TokenAnimationWatcher from './module/TokenAnimationWatcher';
 import UserOperations from './module/UserOperations';
 import MacroOperations from './module/MacroOperations';
 import TokenHooks from './module/hooks/TokenHooks';
-
 /* eslint no-console: ['error', { allow: ['warn', 'log', 'debug'] }] */
 /* eslint-disable no-param-reassign */
-/* global CONFIG */
 
 /**
  * Our Collision instance.
  */
 let collision;
-
 /**
  * Our TokenAnimationWatcher instance.
  */
@@ -112,20 +109,11 @@ const {
   renderTemplate,
 } = global;
 
-/**
- * Determine if we're running Foundry v9.x or not.
- *
- * @return {boolean}
- */
-function isV9x() {
-  return CONFIG?.Canvas?.layers?.background?.layerClass != null;
-}
-
 /* ------------------------------------ */
 /* Initialize module                    */
 /* ------------------------------------ */
-Hooks.once('init', () => {
-  console.log('hey-wait | Initializing hey-wait');
+Hooks.on('init', () => {
+  console.debug('hey-wait | Initializing hey-wait');
   registerSettings();
 });
 
@@ -135,23 +123,12 @@ Hooks.once('init', () => {
 Hooks.on('canvasReady', async () => {
   const { canvas, game, ui } = global;
 
-  let backgroundLayer;
-  if (isV9x()) {
-    backgroundLayer = global.CONFIG.Canvas.layers.background.layerClass;
-  } else {
-    backgroundLayer = global.CONFIG.Canvas.layers.background;
-  }
-
   collision = new Collision(canvas.grid.size);
   gameChanger = new GameChanger(game, canvas);
   entityFinder = new EntityFinder(game, canvas);
 
-  const layer = canvas.layers.find(
-    (targetLayer) => targetLayer instanceof backgroundLayer,
-  );
-
   tokenCalculator = new TokenCalculator();
-  animator = new Animator(layer, ease);
+  animator = new Animator(canvas.primary, ease);
 
   reactionCoordinator = new ReactionCoordinator(
     tokenCalculator,
@@ -161,7 +138,7 @@ Hooks.on('canvasReady', async () => {
 
   macroOperations = new MacroOperations(
     game.user,
-    canvas.background,
+    canvas.scene,
     game.macros,
     ui.notifications,
   );
@@ -212,11 +189,9 @@ Hooks.on('canvasReady', async () => {
 Hooks.on('preCreateTile', (document, data) => {
   // This is referencing the data attached from the form submission, not a flag.
   const isHeyWait = Boolean(data?.isHeyWaitTile);
-
   if (!isHeyWait) {
     return;
   }
-
   // Set the "hey-wait" flag on the new tile dataset.
   data.flags = data.flags || {};
 
@@ -230,14 +205,12 @@ Hooks.on('preCreateTile', (document, data) => {
 
   // Hey, Wait! tiles should be hidden so players cannot see them.
   data.hidden = true;
-
-  document.data.update(data);
+  document.updateSource(data);
 });
 
 Hooks.on('preUpdateTile', (document, change, options) => {
-  const { data } = document;
-
-  if (!data?.flags?.['hey-wait']?.enabled) {
+  const d = document;
+  if (!d?.flags['hey-wait']?.enabled) {
     return;
   }
 
@@ -248,6 +221,7 @@ Hooks.on('preUpdateTile', (document, change, options) => {
   }
 
   change.flags = change.flags || {};
+  change.texture = change.texture || {};
   change.flags['hey-wait'] = change.flags['hey-wait'] || {};
 
   // Record the selected animation type for the Hey, Wait! tile.
@@ -271,14 +245,14 @@ Hooks.on('preUpdateTile', (document, change, options) => {
   // Change the tile image depending on triggered state.
   const triggered = change.flags['hey-wait']?.triggered;
   if (triggered !== undefined) {
-    change.img = triggered ? Constants.TILE_GO_PATH : Constants.TILE_STOP_PATH;
+    change.texture.src = triggered ? Constants.TILE_GO_PATH : Constants.TILE_STOP_PATH;
     options.diff = true;
   }
 
   // Clean the document for any Hey, Wait! residue.
-  delete data.isHeyWaitTile;
-  delete data.heyWaitAnimType;
-  delete data.heyWaitMacro;
+  delete d.isHeyWaitTile;
+  delete d.heyWaitAnimType;
+  delete d.heyWaitMacro;
   // delete data.heyWaitUnlimited;
 });
 
@@ -291,7 +265,7 @@ Hooks.on('preUpdateToken', async (document) => {
 Hooks.on('updateToken', async (document, change) => {
   const canRunUpdate = tokenHooks.canRunTokenUpdate(
     change,
-    document.data.disposition,
+    document.disposition,
     global.game.paused,
   );
 
@@ -301,7 +275,7 @@ Hooks.on('updateToken', async (document, change) => {
 
   await tokenUpdateCoordinator.coordinateUpdate(
     document,
-    global.canvas.background.tiles,
+    global.canvas.scene.tiles,
   );
 });
 
@@ -321,9 +295,7 @@ Hooks.on('renderFormApplication', (config, html) => {
     return;
   }
 
-  const tileConfigOptionsId = isV9x()
-    ? global.CONFIG.Tile.sheetClasses.base['core.TileConfig'].cls.defaultOptions.id
-    : global.CONFIG.Tile.sheetClass.defaultOptions.id;
+  const tileConfigOptionsId = global.CONFIG.Tile.sheetClasses.base['core.TileConfig'].cls.defaultOptions.id;
 
   if (
     config.options.id !== tileConfigOptionsId
@@ -342,19 +314,20 @@ Hooks.on('renderFormApplication', (config, html) => {
 
 Hooks.on('renderTileConfig', (config) => {
   const { game } = global;
-
+  console.debug(config);
   if (
     !tileAuditor.isHeyWaitTile(config.object, game.activeTool)
   ) {
+    console.debug(`${config.object._id} Not a hey wait tile`);
     return;
   }
 
-  const selectedAnimType = config.object.data?.flags?.['hey-wait']?.animType
+  const selectedAnimType = config.object.flags['hey-wait']?.animType
     ?? Constants.DEFAULT_ANIM_TYPE;
 
-  const setMacro = config.object.data?.flags?.['hey-wait']?.macro;
+  const setMacro = config.object.flags['hey-wait']?.macro;
 
-  /* const unlimitedChecked = Boolean(config.object.data?.flags?.['hey-wait']?.unlimited
+  /* const unlimitedChecked = Boolean(config.object.flags['hey-wait']?.unlimited
     ?? false); */
 
   // Ensure the "setMacro" exists and wasn't deleted.
@@ -364,7 +337,7 @@ Hooks.on('renderTileConfig', (config) => {
 
   // Hide the file picker, rotation, and notes for Hey, Wait! tiling...
   const $tileSpriteInputEl = jQuery(config.form).find(
-    'div[data-tab="basic"] input[name="img"]',
+    'div[data-tab="basic"] input[name="texture.src"]',
   );
 
   jQuery(config.form).find('.sheet-tabs a[data-tab!="basic"]').hide();
@@ -443,7 +416,7 @@ Hooks.on('renderTileConfig', (config) => {
   game.macros.forEach((macro) => {
     const option = jQuery('<option></option>');
     jQuery(option).val(macro.id);
-    jQuery(option).html(macro.data.name);
+    jQuery(option).html(macro.name);
     jQuery($macro).append(option);
   });
 
@@ -506,7 +479,7 @@ Hooks.on('renderTileConfig', (config) => {
 Hooks.on('renderTileHUD', async (tileHud, html) => {
   const tileDocument = tileHud.object.document;
 
-  if (!tileDocument.data?.flags?.['hey-wait']?.enabled) {
+  if (!tileDocument.flags['hey-wait']?.enabled) {
     return;
   }
 
@@ -519,7 +492,7 @@ Hooks.on('renderTileHUD', async (tileHud, html) => {
   // Append Hey, Wait! template for the HUD. We need to specify `isNotTriggered`
   // due to Handlebars not being able to inverse logic in a conditional.
   const form = await renderTemplate(Constants.TEMPLATE_HUD_PATH, {
-    isNotTriggered: !tileDocument.data?.flags?.['hey-wait']?.triggered,
+    isNotTriggered: !tileDocument.flags['hey-wait']?.triggered,
   });
   html.find('.col.right').prepend(form);
 

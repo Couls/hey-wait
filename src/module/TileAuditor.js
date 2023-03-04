@@ -17,9 +17,9 @@ export default class TileAuditor {
    *   If this is a Hey, Wait! tile or not.
    */
   isHeyWaitTile(tile, activeTool) {
-    if (tile.data?._id) {
+    if (tile._id) {
       // Existing tile.
-      if (!tile.data?.flags?.['hey-wait']?.enabled) {
+      if (!tile.flags['hey-wait']?.enabled) {
         return false;
       }
     } else if (activeTool && activeTool !== 'heyWaitTile') {

@@ -1,25 +1,35 @@
 {
-  "name": "hey-wait",
-  "title": "Hey, Wait!",
-  "description": "\"Hey, Wait!\" allows a GM to place \"event triggers\" as tiles on a scene.",
-  "version": "0.6.3",
-  "author": "1000nettles",
-  "languages": [
-    {
-      "lang": "en",
-      "name": "English",
-      "path": "src/lang/en.json"
-    }
-  ],
-  "esmodules": [
-    "hey-wait.js"
-  ],
-  "socket": true,
-  "minimumCoreVersion": "0.8.6",
-  "compatibleCoreVersion": "9.238",
-  "url": "https://github.com/1000nettles/hey-wait",
-  "manifest": "https://github.com/1000nettles/hey-wait/releases/download/v0.6.3/module.json",
-  "download": "https://github.com/1000nettles/hey-wait/releases/download/v0.6.3/hey-wait-v0.6.3.zip",
-  "license": "MIT",
-  "readme": "https://raw.githubusercontent.com/1000nettles/hey-wait/main/README.md"
+	"id": "hey-wait",
+	"title": "Hey, Wait!",
+	"description": "\"Hey, Wait!\" allows a GM to place \"event triggers\" as tiles on a scene.",
+	"version": "0.7.0",
+	"authors": [
+		{
+			"name": "1000nettles"
+		},
+		{
+			"name": "Coul",
+			"discord": "Coul#3188"
+		}
+	],
+	"languages": [
+		{
+			"lang": "en",
+			"name": "English",
+			"path": "src/lang/en.json"
+		}
+	],
+	"esmodules": [
+		"hey-wait.js"
+	],
+	"socket": true,
+	"compatibility": {
+		"minimum": 10,
+		"verified": "10.291"
+	},
+	"url": "https://github.com/Couls/hey-wait",
+	"manifest": "https://github.com/Couls/hey-wait/releases/latest/download/module.json",
+	"download": "https://github.com/Couls/hey-wait/releases/download/v1.0.0/hey-wait-v1.0.0.zip",
+	"license": "MIT",
+	"readme": "https://raw.githubusercontent.com/Couls/hey-wait/main/README.md"
 }

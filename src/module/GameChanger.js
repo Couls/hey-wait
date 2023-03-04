@@ -59,7 +59,7 @@ export default class GameChanger {
    *   The relevant tile ID.
    */
   _handleTileChange(tileId) {
-    const tile = this.canvas.background.get(tileId);
+    const tile = this.canvas.tiles.get(tileId);
 
     if (!tile) {
       throw new Error(`Could not find a tile with ID ${tileId}`);
@@ -73,9 +73,10 @@ export default class GameChanger {
           triggered: true,
         },
       },
-      img: Constants.TILE_GO_PATH,
+      texture: {
+        src: Constants.TILE_GO_PATH,
+      },
     };
-
     document.update(
       update,
     );

@@ -47,7 +47,7 @@ export default class Animator {
     if (type === Animator.animationTypes.TYPE_NONE) {
       return;
     }
-
+    // const textbox = new PIXI.Container();
     const sprite = this._getSprite(type, gridSize);
     sprite.alpha = 0;
 
@@ -56,7 +56,8 @@ export default class Animator {
     sprite.position.x = x;
     sprite.position.y = y;
     sprite.name = Math.random().toString(36).substring(16);
-
+    sprite.elevation = 0;
+    sprite.sort = 200;
     const child = this.layer.addChild(sprite);
 
     const anim1 = this.ease.add(

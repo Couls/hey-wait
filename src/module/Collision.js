@@ -30,19 +30,17 @@ export default class Collision {
   checkTileTokenCollision(tile, token, initTokenPos) {
     // 1. Get all the tile's vertices. X and Y are position at top-left corner
     // of tile.
-    const tileX1 = tile.data.x;
-    const tileY1 = tile.data.y;
-    const tileX2 = tile.data.x + tile.data.width;
-    const tileY2 = tile.data.y + tile.data.height;
-
-    const tokenCanvasWidth = token.data.width * this.gridSize;
-    const tokenCanvasHeight = token.data.height * this.gridSize;
+    const tileX1 = tile.x;
+    const tileY1 = tile.y;
+    const tileX2 = tile.x + tile.width;
+    const tileY2 = tile.y + tile.height;
+    const tokenCanvasWidth = token.document.width * this.gridSize;
+    const tokenCanvasHeight = token.document.height * this.gridSize;
 
     const tokenX1 = initTokenPos.x + (tokenCanvasWidth / 2);
     const tokenY1 = initTokenPos.y + (tokenCanvasHeight / 2);
-    const tokenX2 = token.data.x + (tokenCanvasWidth / 2);
-    const tokenY2 = token.data.y + (tokenCanvasHeight / 2);
-
+    const tokenX2 = token.document.x + (tokenCanvasWidth / 2);
+    const tokenY2 = token.document.y + (tokenCanvasHeight / 2);
     // 2. Create a new Ray for the token, from its starting position to its
     // destination.
     const tokenRay = new Ray(

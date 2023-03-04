@@ -46,7 +46,7 @@ export default class EntityFinder {
    */
   findTokenDocument(tokenId, sceneId) {
     const scene = this.findScene(sceneId);
-    const { tokens } = scene.data;
+    const { tokens } = scene;
 
     const tokenDocument = tokens.find((token) => token.id === tokenId);
 

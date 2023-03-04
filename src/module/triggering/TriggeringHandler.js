@@ -51,12 +51,12 @@ export default class TriggeringHandler {
       try {
         // eslint-disable-next-line no-await-in-loop
         await this.gameChanger.execute(
-          tile.id,
-          { x: token.x, y: token.y },
+          tile._id,
+          { x: token.document.x, y: token.document.y },
           viewedSceneId,
         );
       } catch (e) {
-        global.console.error(`hey-wait | ${e.name}: ${e.message}`);
+        // global.console.error(`hey-wait | ${e.name}: ${e.message}`);
       }
 
       // eslint-disable-next-line no-await-in-loop
@@ -113,7 +113,7 @@ export default class TriggeringHandler {
    */
   _isHeyWaitTile(tile) {
     return Boolean(
-      tile.data?.flags?.['hey-wait']?.enabled,
+      tile.flags['hey-wait']?.enabled,
     );
   }
 
@@ -142,7 +142,7 @@ export default class TriggeringHandler {
    */
   _isPreviouslyTriggered(tile) {
     return Boolean(
-      tile.data?.flags?.['hey-wait']?.triggered,
+      tile.flags['hey-wait']?.triggered,
     );
   }
 }

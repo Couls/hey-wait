@@ -1,7 +1,7 @@
 {
   "private": true,
   "name": "hey-wait",
-  "version": "0.6.3",
+  "version": "0.7.0",
   "description": "\"Hey, Wait!\" is a FoundryVTT module allowing a GM to place \"event triggers\" on a scene.",
   "scripts": {
     "build": "npx webpack --config webpack.config.js",
@@ -33,7 +33,7 @@
     "json-stringify-pretty-compact": "^2.0.0",
     "sass": "^1.29.0",
     "webpack": "^5.4.0",
-    "webpack-cli": "^4.2.0",
+    "webpack-cli": "^4.10.0",
     "yargs": "^16.1.0"
   }
 }

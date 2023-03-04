@@ -17,9 +17,9 @@ export default class TokenCalculator {
 
     // In order to "center" our numbers, we'll need to get the in-between
     // based on the grid size.
-    const gridSize = Number(scene.data.grid);
-    const width = Number(token.width) * gridSize;
-    const height = Number(token.height) * gridSize;
+    const gridSize = Number(scene.grid.size);
+    const width = Number(token.document.width) * gridSize;
+    const height = Number(token.document.height) * gridSize;
 
     // Take into account the width of the token - some may be larger than 1.
     coords.x = Math.round(
