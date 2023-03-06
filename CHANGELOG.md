@@ -4,7 +4,10 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
-## [Unreleased]
+## [0.7.0] - 2023-03-05
+
+### Added
+ - Added support for FoundryVTT v10
 
 ## [0.6.3] - 2021-12-22
 
@@ -103,7 +106,6 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - Depending on grid size, if you have a tile that "bleeds" onto other grid spaces, it may not be triggered. Currently only entirely covered grid spaces are guaranteed to trigger
 - Accessibility right now is not great. Support for some sort of pattern on the triggered vs. not triggered tiles would be beneficial
 
-[unreleased]: https://github.com/1000nettles/hey-wait/compare/v0.3.0...HEAD
 [0.3.0]: https://github.com/1000nettles/hey-wait/compare/v0.2.0...v0.3.0
 [0.2.0]: https://github.com/1000nettles/hey-wait/compare/v0.1.1...v0.2.0
 [0.1.1]: https://github.com/1000nettles/hey-wait/compare/v0.1.0...v0.1.1

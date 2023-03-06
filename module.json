@@ -2,7 +2,7 @@
 	"id": "hey-wait",
 	"title": "Hey, Wait!",
 	"description": "\"Hey, Wait!\" allows a GM to place \"event triggers\" as tiles on a scene.",
-	"version": "1.0.0",
+	"version": "0.7.0",
 	"authors": [
 		{
 			"name": "1000nettles"

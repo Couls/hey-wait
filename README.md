@@ -1,5 +1,9 @@
 # Hey, Wait! :raised_hand:
 
+**V10 Version:**
+![Downloads](https://img.shields.io/github/downloads/Couls/hey-wait/latest/hey-wait-v0.7.0.zip?style=flat-square)
+The new V10 version is made by Couls, please report any bugs to ![Issues](https://github.com/Couls/hey-wait/issues)
+
 **9.x / 0.8.x version:**
 ![Downloads](https://img.shields.io/github/downloads/1000nettles/hey-wait/latest/hey-wait-v0.6.3.zip?style=flat-square)
 
@@ -7,9 +11,10 @@
 ![Downloads](https://img.shields.io/github/downloads/1000nettles/hey-wait/v0.4.0/hey-wait-v0.4.0.zip?style=flat-square)
 
 ![Forge Installs](https://img.shields.io/badge/dynamic/json?label=Forge%20Installs&query=package.installs&suffix=%25&url=https%3A%2F%2Fforge-vtt.com%2Fapi%2Fbazaar%2Fpackage%2Fhey-wait&style=flat-square)
-![Issues](https://img.shields.io/github/issues/1000nettles/hey-wait?style=flat-square)
-![MIT License](https://img.shields.io/github/license/1000nettles/hey-wait?style=flat-square)
+![Issues](https://img.shields.io/github/issues/Couls/hey-wait?style=flat-square)
+![MIT License](https://img.shields.io/github/license/Couls/hey-wait?style=flat-square)
 
+Support the Original Developer!
 [![Patreon](img/become_a_patron.png)](https://www.patreon.com/1000nettles)
 
 “Hey, Wait!” is a FoundryVTT module allowing a GM to place “event triggers” as tiles on a scene. When players collide with these triggers, the game pauses and the scene shifts to the player, allowing a GM to explain the theatre-of-the-mind landscape, if the player has ran into a pack of monsters, or anything else you can think of! You can even trigger and execute macros. The intent is to give GMs a bit of breathing room with a pack of players who love to explore.
@@ -47,7 +52,7 @@ You can also set a macro to be executed when a player triggers a Hey, Wait! tile
 
 ## Changelog :mag_right:
 
-Please see the [Changelog](https://github.com/1000nettles/hey-wait/blob/main/CHANGELOG.md) for all changes between updates
+Please see the [Changelog](https://github.com/Couls/hey-wait/blob/main/CHANGELOG.md) for all changes between updates
 
 ## Known Limitations :x:
 
