@@ -52,7 +52,7 @@ export default class TriggeringHandler {
         // eslint-disable-next-line no-await-in-loop
         await this.gameChanger.execute(
           tile._id,
-          { x: token.data.x, y: token.data.y },
+          { x: token.document.x, y: token.document.y },
           viewedSceneId,
         );
       } catch (e) {

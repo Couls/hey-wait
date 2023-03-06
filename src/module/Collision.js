@@ -34,13 +34,13 @@ export default class Collision {
     const tileY1 = tile.y;
     const tileX2 = tile.x + tile.width;
     const tileY2 = tile.y + tile.height;
-    const tokenCanvasWidth = token.data.width * this.gridSize;
-    const tokenCanvasHeight = token.data.height * this.gridSize;
+    const tokenCanvasWidth = token.document.width * this.gridSize;
+    const tokenCanvasHeight = token.document.height * this.gridSize;
 
     const tokenX1 = initTokenPos.x + (tokenCanvasWidth / 2);
     const tokenY1 = initTokenPos.y + (tokenCanvasHeight / 2);
-    const tokenX2 = token.data.x + (tokenCanvasWidth / 2);
-    const tokenY2 = token.data.y + (tokenCanvasHeight / 2);
+    const tokenX2 = token.document.x + (tokenCanvasWidth / 2);
+    const tokenY2 = token.document.y + (tokenCanvasHeight / 2);
     // 2. Create a new Ray for the token, from its starting position to its
     // destination.
     const tokenRay = new Ray(

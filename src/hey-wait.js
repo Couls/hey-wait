@@ -32,7 +32,6 @@ import TokenHooks from './module/hooks/TokenHooks';
  * Our Collision instance.
  */
 let collision;
-
 /**
  * Our TokenAnimationWatcher instance.
  */
@@ -213,9 +212,10 @@ Hooks.on('preCreateTile', (document, data) => {
 });
 
 Hooks.on('preUpdateTile', (document, change, options) => {
-  const { d } = document;
+  const d = document;
   if (!d?.flags['hey-wait']?.enabled) {
     console.debug('Did not find hey-wait flag enabled on tile');
+    console.debug(d);
     return;
   }
 
@@ -226,6 +226,7 @@ Hooks.on('preUpdateTile', (document, change, options) => {
   }
 
   change.flags = change.flags || {};
+  change.texture = change.texture || {};
   change.flags['hey-wait'] = change.flags['hey-wait'] || {};
 
   // Record the selected animation type for the Hey, Wait! tile.
@@ -249,7 +250,7 @@ Hooks.on('preUpdateTile', (document, change, options) => {
   // Change the tile image depending on triggered state.
   const triggered = change.flags['hey-wait']?.triggered;
   if (triggered !== undefined) {
-    change.src = triggered ? Constants.TILE_GO_PATH : Constants.TILE_STOP_PATH;
+    change.texture.src = triggered ? Constants.TILE_GO_PATH : Constants.TILE_STOP_PATH;
     options.diff = true;
   }
 

@@ -48,7 +48,7 @@ export default class ReactionCoordinator {
       animType,
       coords.x,
       coords.y,
-      scene.grid,
+      scene.grid.size,
     );
 
     this._handleSfx(animType);
