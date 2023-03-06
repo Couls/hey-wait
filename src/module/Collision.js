@@ -57,30 +57,6 @@ export default class Collision {
     // 3. Create four intersection checks, one for each line making up the
     // tile rectangle. If any of these pass, that means it has intersected at
     // some point.
-    console.debug(Boolean(tokenRay.intersectSegment([
-      tileX1,
-      tileY1,
-      tileX2,
-      tileY1,
-    ]))
-      || Boolean(tokenRay.intersectSegment([
-        tileX2,
-        tileY1,
-        tileX2,
-        tileY2,
-      ]))
-      || Boolean(tokenRay.intersectSegment([
-        tileX2,
-        tileY2,
-        tileX1,
-        tileY2,
-      ]))
-      || Boolean(tokenRay.intersectSegment([
-        tileX1,
-        tileY2,
-        tileX1,
-        tileY1,
-      ])));
     return Boolean(tokenRay.intersectSegment([
       tileX1,
       tileY1,

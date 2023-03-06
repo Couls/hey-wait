@@ -77,7 +77,6 @@ export default class GameChanger {
         src: Constants.TILE_GO_PATH,
       },
     };
-    console.debug(document, 'Flags should be set to triggered and the map src should have been changed');
     document.update(
       update,
     );

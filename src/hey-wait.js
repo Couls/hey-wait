@@ -189,9 +189,7 @@ Hooks.on('canvasReady', async () => {
 Hooks.on('preCreateTile', (document, data) => {
   // This is referencing the data attached from the form submission, not a flag.
   const isHeyWait = Boolean(data?.isHeyWaitTile);
-  console.debug(data, 'Creating HeyWait Tile...');
   if (!isHeyWait) {
-    console.debug('isHeyWait is false!');
     return;
   }
   // Set the "hey-wait" flag on the new tile dataset.
@@ -207,15 +205,12 @@ Hooks.on('preCreateTile', (document, data) => {
 
   // Hey, Wait! tiles should be hidden so players cannot see them.
   data.hidden = true;
-  console.debug(`${data} + completed adding flags to tile + ${document}`);
   document.updateSource(data);
 });
 
 Hooks.on('preUpdateTile', (document, change, options) => {
   const d = document;
   if (!d?.flags['hey-wait']?.enabled) {
-    console.debug('Did not find hey-wait flag enabled on tile');
-    console.debug(d);
     return;
   }
 

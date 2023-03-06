@@ -95,7 +95,6 @@ export default class TriggeringHandler {
     }
 
     if (!this.collision.checkTileTokenCollision(tile, tokenDoc.object, initTokenPos)) {
-      console.debug('No tile collision between the following:', tile, tokenDoc.object, initTokenPos);
       return false;
     }
 
