@@ -474,6 +474,20 @@ Hooks.on('renderTileConfig', (config) => {
   jQuery(hidden).insertBefore(
     jQuery(config.form).find(':submit'),
   );
+  jQuery(config.form).find('button:last[type="submit"]').on('click', () => {
+    config.object.update(
+      {
+        flags:
+        {
+          'hey-wait':
+          {
+            animType: Number(tileType.val()),
+            macro: $macro.val(),
+          },
+        },
+      },
+    );
+  });
 });
 
 Hooks.on('renderTileHUD', async (tileHud, html) => {
