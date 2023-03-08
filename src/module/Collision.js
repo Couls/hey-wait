@@ -39,6 +39,10 @@ export default class Collision {
 
     const tokenX1 = initTokenPos.x + (tokenCanvasWidth / 2);
     const tokenY1 = initTokenPos.y + (tokenCanvasHeight / 2);
+    // Allow movement out of the tile without triggering it if you start the movement inside the tile
+    if (initTokenPos.x === tileX1 && initTokenPos.y === tileY1 && tile.flags['hey-wait']?.unlimited) {
+      return false;
+    }
     const tokenX2 = token.document.x + (tokenCanvasWidth / 2);
     const tokenY2 = token.document.y + (tokenCanvasHeight / 2);
     // 2. Create a new Ray for the token, from its starting position to its

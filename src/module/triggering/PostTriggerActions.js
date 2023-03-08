@@ -26,8 +26,9 @@ export default class PostTriggerActions {
    *   The Tile which was triggered.
    */
   async execute(tokenDoc, tile) {
-    // 1. Fire the associated macro with the Hey, Wait! tile if one's defined. Stop token movement on the triggering tile.
+    // 1. Fire the associated macro with the Hey, Wait! tile if one's defined.
     this.macroOperations.handleTileMacroFiring(tile.id, tokenDoc);
+    // Set triggering token to the location of the tile
     const token = tokenDoc.object;
     tokenDoc.update({ x: tile.x, y: tile.y });
 
