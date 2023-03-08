@@ -22,6 +22,11 @@
 			"lang": "ja",
 			"name": "日本語",
 			"path": "src/lang/ja.json"
+		},
+		{
+			"lang": "fr",
+			"name": "Français",
+			"path": "src/lang/fr.json"
 		}
 	],
 	"esmodules": [
