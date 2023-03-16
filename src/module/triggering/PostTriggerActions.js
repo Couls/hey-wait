@@ -30,7 +30,6 @@ export default class PostTriggerActions {
     this.macroOperations.handleTileMacroFiring(tile.id, tokenDoc);
     // Set triggering token to the location of the tile
     const token = tokenDoc.object;
-    tokenDoc.update({ x: tile.x, y: tile.y });
 
     // 2. Pan to the trigger location.
     const coords = { x: token.x, y: token.y };

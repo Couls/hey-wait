@@ -4,6 +4,14 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## [0.7.3] - 2023-03-16
+
+### Added
+
+ - French translations thanks to weblate
+ - Triggering a tile now snaps triggering token to nearest tile inside token
+ - Trigger animation now shows on interface level, above fog of war, darkness and foreground images
+
 ## [0.7.2] - 2023-03-08
 
 ### Added

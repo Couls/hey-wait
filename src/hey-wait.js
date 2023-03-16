@@ -128,7 +128,7 @@ Hooks.on('canvasReady', async () => {
   entityFinder = new EntityFinder(game, canvas);
 
   tokenCalculator = new TokenCalculator();
-  animator = new Animator(canvas.primary, ease);
+  animator = new Animator(canvas.interface, ease);
 
   reactionCoordinator = new ReactionCoordinator(
     tokenCalculator,
@@ -247,7 +247,7 @@ Hooks.on('preUpdateTile', (document, change, options) => {
   if (document.flags['hey-wait']?.unlimited && triggered !== undefined) {
     change.flags['hey-wait'].triggered = false;
     change.texture.src = Constants.TILE_STOP_PATH;
-  } else {
+  } else if (!document.flags['hey-wait']?.unlimited && triggered !== undefined) {
     change.texture.src = triggered ? Constants.TILE_GO_PATH : Constants.TILE_STOP_PATH;
     options.diff = true;
   }
