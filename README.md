@@ -1,7 +1,7 @@
 # Hey, Wait! :raised_hand:
 
 **V10 Version:**
-![Downloads](https://img.shields.io/github/downloads/Couls/hey-wait/latest/hey-wait-v0.7.3.zip?style=flat-square)
+![Downloads](https://img.shields.io/github/downloads/Couls/hey-wait/latest/hey-wait-v0.7.4.zip?style=flat-square)
 
 The new V10 version is made by Couls, please report any bugs [here](https://github.com/Couls/hey-wait/issues)
 

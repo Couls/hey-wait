@@ -39,6 +39,7 @@ export default class Collision {
 
     const tokenX1 = initTokenPos.x + (tokenCanvasWidth / 2);
     const tokenY1 = initTokenPos.y + (tokenCanvasHeight / 2);
+
     // Allow movement out of the tile without triggering if you start your movement inside the tile
     if (tokenX1 >= tileX1 && tokenX1 <= tileX2 && tokenY1 >= tileY1 && tokenY1 <= tileY2 && tile.flags['hey-wait']?.unlimited) {
       return false;
@@ -116,15 +117,25 @@ export default class Collision {
       ]));
     }
     if (!intersectionPoints.length) return false;
-    // 4. Find the intersection point nearest to the token's initial position.
+    if (tile.width === this.gridSize && tile.height === this.gridSize) {
+      const final = global.canvas.grid.getSnappedPosition(
+        tileX1, tileY1,
+      );
+      token.document.update({ x: final.x, y: final.y });
+      return true;
+    }
+    // 4. Find the intersection point nearest to the token's initial position
     let nearestIntersectionPoint = null;
-    let nearestIntersectionDistanceSquared = Infinity;
+    let nearestIntersectionDistance = Infinity;
     for (const intersectionPoint of intersectionPoints) {
-      const distanceSquared = (intersectionPoint.x - tokenX1) ** 2
-      + (intersectionPoint.y - tokenY1) ** 2;
-      if (distanceSquared < nearestIntersectionDistanceSquared) {
+      // change the dimensions before calculating anything
+      intersectionPoint.x -= (tokenCanvasWidth / 2);
+      intersectionPoint.y -= (tokenCanvasHeight / 2);
+      const distance = Math.abs(intersectionPoint.x - tokenX1)
+        + Math.abs(intersectionPoint.y - tokenY1);
+      if (distance < nearestIntersectionDistance) {
         nearestIntersectionPoint = intersectionPoint;
-        nearestIntersectionDistanceSquared = distanceSquared;
+        nearestIntersectionDistance = distance;
       }
     }
     // if we start right of the tile, nudge final position left
@@ -139,6 +150,7 @@ export default class Collision {
     const finalintersectionpoint = global.canvas.grid.getSnappedPosition(
       nearestIntersectionPoint.x, nearestIntersectionPoint.y,
     );
+
     token.document.update({ x: finalintersectionpoint.x, y: finalintersectionpoint.y });
 
     return true;

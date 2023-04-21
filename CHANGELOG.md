@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## [0.7.4] - 2023-04-21
+
+### Fixed
+
+ - Tokens being nudged wrongly when moving onto a Hey, Wait! tile
+
 ## [0.7.3] - 2023-03-16
 
 ### Added
