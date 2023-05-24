@@ -1,1 +1,24 @@
-{}
+{
+	"HEYWAIT.SETTINGS.dispositionName": "Tipos de Disposição de Token Permitidos",
+	"HEYWAIT.SETTINGS.dispositionChoiceFriendly": "Amigável",
+	"HEYWAIT.SETTINGS.dispositionChoiceFriendlyNeutral": "Amigável, neutro",
+	"HEYWAIT.SETTINGS.dispositionChoiceFriendlyNeutralHostile": "Amigável, Neutro, Hostil",
+	"HEYWAIT.SETTINGS.disableSfxName": "Desativar efeitos sonoros de acionamento dos blocos",
+	"HEYWAIT.SETTINGS.disableSfxHint": "Desativa a reprodução de efeitos sonoros quando alguém aciona os blocos do Hey, Wait!.",
+	"HEYWAIT.CONTROLS.TOOLS.heyWaitTile": "Coloque o bloco \"Hey, Wait!\"",
+	"HEYWAIT.SETTINGS.warpPlayersName": "Distorcer jogadores no acionamento do bloco",
+	"HEYWAIT.TILECONFIG.typeNone": "Nenhum",
+	"HEYWAIT.TILECONFIG.typeQuestion": "Pergunta ( ? )",
+	"HEYWAIT.TILECONFIG.typeExclamation": "Exclamação ( ! )",
+	"HEYWAIT.TILECONFIG.macroText": "Macro de acionamento",
+	"HEYWAIT.TILECONFIG.macroNone": "Nenhum",
+	"HEYWAIT.TILECONFIG.unlimitedText": "Ativar acionadores ilimitados",
+	"HEYWAIT.TILECONFIG.typeText": "Tipo de animação do bloco",
+	"HEYWAIT.TILECONFIG.typeInfo": "Informações ( ⓘ )",
+	"HEYWAIT.SETTINGS.restrictGmName": "Restringir o GM de acionar blocos",
+	"HEYWAIT.TEMPLATE.isNotTriggered": "Alternar o estado de acionamento \"Hey, Wait!\"",
+	"HEYWAIT.TILECONFIG.unlimitedHint": "Se selecionado, depois que o bloco Hey, Wait! for acionado, outros tokens ainda poderão acioná-lo.",
+	"HEYWAIT.SETTINGS.restrictGmHint": "O acionamento dos blocos Hey, Wait! será bloqueado apenas para o movimento da ficha do jogador e não do GM.",
+	"HEYWAIT.SETTINGS.warpPlayersHint": "O acionamento de um bloco Hey, Wait! em uma cena que um jogador não esteja visualizando o levará para essa cena. Os GMs sempre serão desviados de qualquer maneira.",
+	"HEYWAIT.SETTINGS.dispositionHint": "Os tipos de disposição de token que podem acionar os blocos do Hey, Wait!."
+}
