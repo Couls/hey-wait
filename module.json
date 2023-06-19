@@ -32,6 +32,12 @@
       "name": "Français",
       "path": "src/lang/fr.json",
       "flags": {}
+		},
+		{
+			"lang": "pt-BR",
+			"name": "Português (Brasil)",
+			"path": "src/lang/pt_BR.json",
+      "flags": {}
     }
   ],
   "esmodules": [
