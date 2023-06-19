@@ -4,6 +4,15 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## [0.7.5] - 2023-06-18
+
+### Added
+
+ - V11 Compatibility
+ - Elevation checks
+ - Token whitelist, can select a list of tokens on the scene that can trigger a tile
+ - pt-BR weblate translations (thanks to eunaumtenhoid)
+
 ## [0.7.4] - 2023-04-21
 
 ### Fixed

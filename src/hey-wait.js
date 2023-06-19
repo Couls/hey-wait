@@ -201,6 +201,9 @@ Hooks.on('preCreateTile', (document, data) => {
     animType: Number(data.heyWaitAnimType),
     macro: data.heyWaitMacro,
     unlimited: data.heyWaitUnlimited,
+    targets: data.heyWaitTargets,
+    elevationBottom: data.heyWaitElevationLower,
+    elevationTop: data.heyWaitElevationUpper,
   };
 
   // Hey, Wait! tiles should be hidden so players cannot see them.
@@ -242,6 +245,22 @@ Hooks.on('preUpdateTile', (document, change, options) => {
     options.diff = true;
   }
 
+  // Record Selected Targets for the Hey, Wait! tile.
+  if (change?.heyWaitTargets?.length > 0) {
+    change.flags['hey-wait'].targets = change.heyWaitTargets;
+    options.diff = true;
+  }
+
+  // Record Elevation Changes for the Hey, Wait! tile.
+  if (change?.heyWaitElevationLower !== undefined) {
+    change.flags['hey-wait'].elevationBottom = Number(change.heyWaitElevationLower);
+    options.diff = true;
+  }
+  if (change?.heyWaitElevationUpper !== undefined) {
+    change.flags['hey-wait'].elevationTop = Number(change.heyWaitElevationUpper);
+    options.diff = true;
+  }
+
   // Change the tile image depending on triggered state or do nothing if unlimited.
   const triggered = change.flags['hey-wait']?.triggered;
   if (document.flags['hey-wait']?.unlimited && triggered !== undefined) {
@@ -257,6 +276,9 @@ Hooks.on('preUpdateTile', (document, change, options) => {
   delete d.heyWaitAnimType;
   delete d.heyWaitMacro;
   delete d.heyWaitUnlimited;
+  delete d.heyWaitTargets;
+  delete d.heyWaitElevationLower;
+  delete d.heyWaitElevationUpper;
 });
 
 Hooks.on('preUpdateToken', async (document) => {
@@ -316,7 +338,7 @@ Hooks.on('renderFormApplication', (config, html) => {
 });
 
 Hooks.on('renderTileConfig', (config) => {
-  const { game } = global;
+  const { canvas, game } = global;
   console.debug(config);
   if (
     !tileAuditor.isHeyWaitTile(config.object, game.activeTool)
@@ -332,6 +354,10 @@ Hooks.on('renderTileConfig', (config) => {
 
   const unlimitedChecked = Boolean(config.object.flags['hey-wait']?.unlimited
     ?? false);
+
+  const selectedTargets = Array(config.object.flags['hey-wait']?.targets);
+  const selectedElevationLower = Number(config.object.flags['hey-wait']?.elevationBottom);
+  const selectedElevationUpper = Number(config.object.flags['hey-wait']?.elevationTop);
 
   // Ensure the "setMacro" exists and wasn't deleted.
   const selectedMacro = setMacro && game.macros.get(setMacro)
@@ -457,8 +483,68 @@ Hooks.on('renderTileConfig', (config) => {
   $unlimitedWrapped.prepend($unlimitedLabel);
   $unlimitedWrapped.append($unlimitedHint);
 
+  // Elevation Section
+  const elevationLower = jQuery('<input />', {
+    type: 'Number',
+    name: 'heyWaitElevationLower',
+  });
+  const elevationLowerLabel = jQuery('<label></label>').attr('for', 'heyWaitElevationLower').html(game.i18n.localize('HEYWAIT.TILECONFIG.elevationLowerText'));
+  const elevationUpper = jQuery('<input />', {
+    type: 'Number',
+    name: 'heyWaitElevationUpper',
+  });
+  elevationLower.val(selectedElevationLower);
+  elevationUpper.val(selectedElevationUpper);
+  const elevationUpperLabel = jQuery('<label></label>').attr('for', 'heyWaitElevationUpper').html(game.i18n.localize('HEYWAIT.TILECONFIG.elevationUpperText'));
+  const elevationLowerWrapped = elevationLower.wrap('<div class="form-group"></div>').parent();
+  elevationLowerWrapped.prepend(elevationLowerLabel);
+  const elevationUpperWrapped = elevationUpper.wrap('<div class="form-group"></div>').parent();
+  elevationUpperWrapped.prepend(elevationUpperLabel);
+  const elevationHint = jQuery('<p></p>').attr('class', 'notes').html(game.i18n.localize('HEYWAIT.TILECONFIG.elevationHint'));
+  elevationUpperWrapped.append(elevationHint);
+
+  // Build Character dropdown
+  const characters = canvas.tokens.placeables;
+  const tileTargets = jQuery('<select multiple></select>').attr('name', 'heyWaitTargets');
+  for (let i = 0; i < characters.length; i += 1) {
+    const option = jQuery('<option></option>');
+    jQuery(option).val(characters[i].id);
+    jQuery(option).html(characters[i].name);
+    jQuery(tileTargets).append(option);
+  }
+  const selectedOptions = [];
+  tileTargets.on('change', function clearArray() {
+    selectedOptions.length = 0; // Clear the array
+
+    jQuery(this).find('option:selected').each(function buildArray() {
+      selectedOptions.push(jQuery(this).val());
+    });
+  });
+
+  // Pre-select options based on the selectedTargets array
+  selectedTargets.forEach((target) => {
+    tileTargets.find(`option[value="${target}"]`).prop('selected', true);
+  });
+  const Targetlist = jQuery('<ul></ul>');
+
+  const tileTargetLabel = jQuery('<label></label>').attr('for', 'heyWaitTargets').html(game.i18n.localize('HEYWAIT.TILECONFIG.targetText'));
+  const tileTargetWrapped = tileTargets.wrap('<div class="form-group"></div>').parent();
+  const tileTargetHint = jQuery('<p></p>').attr('class', 'notes').html(game.i18n.localize('HEYWAIT.TILECONFIG.targetHint'));
+  tileTargetWrapped.append(tileTargetHint);
+  Targetlist.append(tileTargetLabel);
+  tileTargetWrapped.prepend(tileTargetLabel);
+
   jQuery(config.form).find('div[data-tab="basic"]').first().append(
     tileTypeWrapped,
+  );
+  jQuery(config.form).find('div[data-tab="basic"]').first().append(
+    tileTargetWrapped,
+  );
+  jQuery(config.form).find('div[data-tab="basic"]').first().append(
+    elevationLowerWrapped,
+  );
+  jQuery(config.form).find('div[data-tab="basic"]').first().append(
+    elevationUpperWrapped,
   );
   jQuery(config.form).find('div[data-tab="basic"]').first().append(
     macroWrapped,
@@ -487,6 +573,9 @@ Hooks.on('renderTileConfig', (config) => {
             animType: Number(tileType.val()),
             macro: $macro.val(),
             unlimited: Boolean($unlimited.prop('checked')),
+            elevationBottom: Number(elevationLower.val()),
+            elevationTop: Number(elevationUpper.val()),
+            targets: selectedOptions,
           },
         },
       },
