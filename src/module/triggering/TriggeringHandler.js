@@ -100,7 +100,7 @@ export default class TriggeringHandler {
       return false;
     }
 
-    if (!tile.flags['hey-wait']?.triggered && this._isPreviouslyTriggered(tile)) {
+    if (!tile.flags['hey-wait']?.unlimited && this._isPreviouslyTriggered(tile)) {
       return false;
     }
 
