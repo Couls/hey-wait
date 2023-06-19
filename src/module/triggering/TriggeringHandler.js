@@ -90,7 +90,17 @@ export default class TriggeringHandler {
       return false;
     }
 
-    if (this._isPreviouslyTriggered(tile)) {
+    // elevation checks
+    if (!this._elevationChecks(tile, tokenDoc)) {
+      return false; // the token isn't on the same height
+    }
+
+    // check if whitelist exists and target is in it
+    if (tile.flags['hey-wait']?.targets?.length > 0 && !tile.flags['hey-wait']?.targets.includes(tokenDoc.id)) {
+      return false;
+    }
+
+    if (!tile.flags['hey-wait']?.triggered && this._isPreviouslyTriggered(tile)) {
       return false;
     }
 
@@ -115,6 +125,24 @@ export default class TriggeringHandler {
     return Boolean(
       tile.flags['hey-wait']?.enabled,
     );
+  }
+
+  /**
+   * Elevation checks to see if elevation is set and the token is in the right height to trigger
+   *
+   * @param {Tile} tile
+   *   The relevant Tile for checking.
+   *
+   * @return {boolean}
+   *
+   * @private
+   */
+  _elevationChecks(tile, tokenDoc) {
+    const elevationL = tile.flags['hey-wait'].elevationBottom;
+    const elevationH = tile.flags['hey-wait'].elevationTop;
+    if (elevationL == null || elevationH == null) return false;
+    return Boolean(tokenDoc.elevation >= elevationL
+      && tokenDoc.elevation <= elevationH); // move onto next check
   }
 
   _checkIsValidWithOtherModules(tile, token) {
