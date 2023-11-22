@@ -200,20 +200,19 @@ Hooks.on('preCreateTile', (document, data) => {
     triggered: false,
     animType: Number(data.heyWaitAnimType),
     macro: data.heyWaitMacro,
-    unlimited: data.heyWaitUnlimited,
+    unlimited: Boolean(data.heyWaitUnlimited),
     targets: data.heyWaitTargets,
-    elevationBottom: data.heyWaitElevationLower,
-    elevationTop: data.heyWaitElevationUpper,
+    elevationBottom: Number(data.heyWaitElevationLower),
+    elevationTop: Number(data.heyWaitElevationUpper),
   };
-
   // Hey, Wait! tiles should be hidden so players cannot see them.
   data.hidden = true;
   document.updateSource(data);
 });
 
 Hooks.on('preUpdateTile', (document, change, options) => {
-  const d = document;
-  if (!d?.flags['hey-wait']?.enabled) {
+  const { d } = document;
+  if (!d?.flags?.['hey-wait']) {
     return;
   }
 
@@ -241,7 +240,7 @@ Hooks.on('preUpdateTile', (document, change, options) => {
 
   // Record the "unlimited" setting for the Hey, Wait! tile.
   if (change?.heyWaitUnlimited !== undefined) {
-    change.flags['hey-wait'].unlimited = change.heyWaitUnlimited;
+    change.flags['hey-wait'].unlimited = Boolean(change.heyWaitUnlimited);
     options.diff = true;
   }
 
@@ -263,10 +262,11 @@ Hooks.on('preUpdateTile', (document, change, options) => {
 
   // Change the tile image depending on triggered state or do nothing if unlimited.
   const triggered = change.flags['hey-wait']?.triggered;
-  if (document.flags['hey-wait']?.unlimited && triggered !== undefined) {
+  if (d.flags['hey-wait']?.unlimited && triggered !== undefined) {
     change.flags['hey-wait'].triggered = false;
     change.texture.src = Constants.TILE_STOP_PATH;
-  } else if (!document.flags['hey-wait']?.unlimited && triggered !== undefined) {
+    options.diff = true;
+  } else if (!d.flags['hey-wait']?.unlimited && triggered !== undefined) {
     change.texture.src = triggered ? Constants.TILE_GO_PATH : Constants.TILE_STOP_PATH;
     options.diff = true;
   }
@@ -347,17 +347,17 @@ Hooks.on('renderTileConfig', (config) => {
     return;
   }
 
-  const selectedAnimType = config.object.flags['hey-wait']?.animType
+  const selectedAnimType = config.object.flags?.['hey-wait']?.animType
     ?? Constants.DEFAULT_ANIM_TYPE;
 
-  const setMacro = config.object.flags['hey-wait']?.macro;
+  const setMacro = config.object.flags?.['hey-wait']?.macro;
 
-  const unlimitedChecked = Boolean(config.object.flags['hey-wait']?.unlimited
+  const unlimitedChecked = Boolean(config.object.flags?.['hey-wait']?.unlimited
     ?? false);
 
-  const selectedTargets = Array(config.object.flags['hey-wait']?.targets);
-  const selectedElevationLower = Number(config.object.flags['hey-wait']?.elevationBottom);
-  const selectedElevationUpper = Number(config.object.flags['hey-wait']?.elevationTop);
+  const selectedTargets = Array(config.object.flags?.['hey-wait']?.targets) ?? [];
+  const selectedElevationLower = Number(config.object.flags?.['hey-wait']?.elevationBottom);
+  const selectedElevationUpper = Number(config.object.flags?.['hey-wait']?.elevationTop);
 
   // Ensure the "setMacro" exists and wasn't deleted.
   const selectedMacro = setMacro && game.macros.get(setMacro)
@@ -563,30 +563,32 @@ Hooks.on('renderTileConfig', (config) => {
   jQuery(hidden).insertBefore(
     jQuery(config.form).find(':submit'),
   );
-  jQuery(config.form).find('button:last[type="submit"]').on('click', () => {
-    config.object.update(
-      {
-        flags:
+  if (config.object?._id) {
+    jQuery(config.form).find('button:last[type="submit"]').on('click', () => {
+      config.object.update(
         {
-          'hey-wait':
+          flags:
           {
-            animType: Number(tileType.val()),
-            macro: $macro.val(),
-            unlimited: Boolean($unlimited.prop('checked')),
-            elevationBottom: Number(elevationLower.val()),
-            elevationTop: Number(elevationUpper.val()),
-            targets: selectedOptions,
+            'hey-wait':
+            {
+              animType: Number(tileType.val()) ?? 0,
+              macro: $macro.val() ?? '',
+              unlimited: Boolean($unlimited.prop('checked')) ?? false,
+              elevationBottom: Number(elevationLower.val()) ?? 0,
+              elevationTop: Number(elevationUpper.val()) ?? 0,
+              targets: selectedOptions,
+            },
           },
         },
-      },
-    );
-  });
+      );
+    });
+  }
 });
 
 Hooks.on('renderTileHUD', async (tileHud, html) => {
   const tileDocument = tileHud.object.document;
 
-  if (!tileDocument.flags['hey-wait']?.enabled) {
+  if (!tileDocument.flags?.['hey-wait']?.enabled) {
     return;
   }
 

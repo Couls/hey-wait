@@ -56,7 +56,7 @@ export default class TriggeringHandler {
           viewedSceneId,
         );
       } catch (e) {
-        // global.console.error(`hey-wait | ${e.name}: ${e.message}`);
+        global.console.error(`hey-wait | ${e.name}: ${e.message}`);
       }
 
       // eslint-disable-next-line no-await-in-loop
@@ -96,7 +96,7 @@ export default class TriggeringHandler {
     }
 
     // check if whitelist exists and target is in it
-    if (tile.flags['hey-wait']?.targets?.length > 0 && !tile.flags['hey-wait']?.targets.includes(tokenDoc.id)) {
+    if (tile.flags['hey-wait']?.targets?.length > 0 && tokenDoc && !tile.flags['hey-wait']?.targets.includes(tokenDoc.id)) {
       return false;
     }
 
@@ -123,7 +123,7 @@ export default class TriggeringHandler {
    */
   _isHeyWaitTile(tile) {
     return Boolean(
-      tile.flags['hey-wait']?.enabled,
+      tile.flags?.['hey-wait']?.enabled,
     );
   }
 
@@ -138,9 +138,11 @@ export default class TriggeringHandler {
    * @private
    */
   _elevationChecks(tile, tokenDoc) {
-    const elevationL = tile.flags['hey-wait'].elevationBottom;
-    const elevationH = tile.flags['hey-wait'].elevationTop;
-    if (elevationL == null || elevationH == null) return false;
+    const elevationL = tile.flags['hey-wait']?.elevationBottom;
+    const elevationH = tile.flags['hey-wait']?.elevationTop;
+    if (elevationL == null || elevationH == null || elevationL === elevationH) {
+      return true; // elevation isn't being used
+    }
     return Boolean(tokenDoc.elevation >= elevationL
       && tokenDoc.elevation <= elevationH); // move onto next check
   }

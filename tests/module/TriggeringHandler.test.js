@@ -23,11 +23,9 @@ it('can exit early when checking if is hey wait tile when checking is triggered'
   expect(result).toBeFalsy();
 
   const tile = {
-    data: {
-      flags: {
-        'hey-wait': {
-          enabled: false,
-        },
+    flags: {
+      'hey-wait': {
+        enabled: false,
       },
     },
   };
@@ -38,11 +36,9 @@ it('can exit early when checking if is hey wait tile when checking is triggered'
 it('can exit early when checking if previously triggered when checking is triggered', async () => {
   const triggeringHandler = new TriggeringHandler({}, {}, {});
   const tile = {
-    data: {
-      flags: {
-        'hey-wait': {
-          triggered: true,
-        },
+    flags: {
+      'hey-wait': {
+        triggered: true,
       },
     },
   };
@@ -60,12 +56,11 @@ it('can exit early when checking no collision when checking is triggered', async
 
   const triggeringHandler = new TriggeringHandler(mockCollision, {}, {});
   const tile = {
-    data: {
-      flags: {
-        'hey-wait': {
-          enabled: true,
-          triggered: false,
-        },
+    flags: {
+      'hey-wait': {
+        enabled: true,
+        triggered: false,
+        unlimited: false,
       },
     },
   };
@@ -92,20 +87,20 @@ it('can determine a tile has been triggered', async () => {
   );
 
   const tile = {
-    id: 'an_id',
-    data: {
-      flags: {
-        'hey-wait': {
-          enabled: true,
-          triggered: false,
-        },
+    _id: 'an_id',
+    flags: {
+      'hey-wait': {
+        enabled: true,
+        triggered: false,
       },
     },
   };
 
   const token = {
-    x: 3,
-    y: 4,
+    document: {
+      x: 3,
+      y: 4,
+    },
   };
   const tokenDoc = {
     id: 'a_token_id',

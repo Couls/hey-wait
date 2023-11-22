@@ -4,6 +4,16 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## [0.7.6 - Happy Thanksgiving!] - 2023-11-22
+
+### Updated
+ - V11 Compatibility updated for 11.315
+
+### Fixed
+ - Creating new Tiles through the "Place, Hey Wait Tile" Tool had incorrect configurations
+ - Updated tests for V11
+
+
 ## [0.7.5] - 2023-06-18
 
 ### Added

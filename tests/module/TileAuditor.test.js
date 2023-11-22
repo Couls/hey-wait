@@ -4,9 +4,7 @@ import Constants from 'module/Constants';
 it('can determine it is not a hey wait tile by an absent flag', () => {
   const auditor = new TileAuditor();
   const tile = {
-    data: {
-      _id: 'an_id',
-    },
+    _id: 'an_id',
   };
   const result = auditor.isHeyWaitTile(tile);
   expect(result).toBeFalsy();
@@ -15,12 +13,10 @@ it('can determine it is not a hey wait tile by an absent flag', () => {
 it('can determine it is not a hey wait tile by flag that shows it as being not enabled', () => {
   const auditor = new TileAuditor();
   const tile = {
-    data: {
-      _id: 'an_id',
-      flags: {
-        'hey-wait': {
-          enabled: false,
-        },
+    _id: 'an_id',
+    flags: {
+      'hey-wait': {
+        enabled: false,
       },
     },
   };
