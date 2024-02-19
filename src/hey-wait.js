@@ -265,9 +265,11 @@ Hooks.on('preUpdateTile', (document, change, options) => {
   if (d.flags['hey-wait']?.unlimited && triggered !== undefined) {
     change.flags['hey-wait'].triggered = false;
     change.texture.src = Constants.TILE_STOP_PATH;
+    console.log('Unlimited: true, texture.src is changing to stop_path');
     options.diff = true;
   } else if (!d.flags['hey-wait']?.unlimited && triggered !== undefined) {
     change.texture.src = triggered ? Constants.TILE_GO_PATH : Constants.TILE_STOP_PATH;
+    console.log('Unlimited: false, changing texture depending on thangs');
     options.diff = true;
   }
 
@@ -607,12 +609,21 @@ Hooks.on('renderTileHUD', async (tileHud, html) => {
 
   html.find('.hey-wait-isNotTriggered').click(async () => {
     // Toggle the triggered state of the Hey, Wait! tile.
-    await tileDocument.setFlag(
-      'hey-wait',
-      'triggered',
-      !tileDocument.getFlag('hey-wait', 'triggered'),
-    );
-
+    if (tileDocument.getFlag('hey-wait', 'unlimited') === false) {
+      await tileDocument.update({
+        flags: {
+          'hey-wait': {
+            triggered: !tileDocument.getFlag('hey-wait', 'triggered'),
+          },
+        },
+        texture: {
+          src: tileDocument.getFlag('hey-wait', 'triggered') ? Constants.TILE_STOP_PATH : Constants.TILE_GO_PATH,
+        },
+      });
+    } else {
+      const { canvas, game } = global;
+      canvas.interface.createScrollingText(tileDocument, game.i18n.localize('HEYWAIT.TILECONFIG.UnlimitedWarn'), { duration: 2500 });
+    }
     tileHud.render();
   });
 });

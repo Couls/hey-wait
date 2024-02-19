@@ -74,7 +74,7 @@ export default class GameChanger {
         },
       },
       texture: {
-        src: Constants.TILE_GO_PATH,
+        src: document.getFlag('hey-wait', 'unlimited') ? Constants.TILE_STOP_PATH : Constants.TILE_GO_PATH,
       },
     };
     document.update(

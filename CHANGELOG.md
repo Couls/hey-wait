@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## [0.7.7] 2024-02-19
+
+### Fixed
+ - Using TileHUD to change triggered status didn't reflect on the texture
+
 ## [0.7.6 - Happy Thanksgiving!] - 2023-11-22
 
 ### Updated

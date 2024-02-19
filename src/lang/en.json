@@ -25,5 +25,6 @@
   "HEYWAIT.TILECONFIG.targetHint": "Hold CTRL to select multiple targets, only selected targets will be able to trigger this tile. Only shows actors in scene. Leave empty to allow every character to trigger this tile.",
   "HEYWAIT.TILECONFIG.elevationLowerText": "Elevation Bottom",
   "HEYWAIT.TILECONFIG.elevationUpperText": "Elevation Top",
-  "HEYWAIT.TILECONFIG.elevationHint": "If set, this Tile will only trigger on tokens above elevation bottom and below elevation top. Leave empty to trigger at any elevation"
+  "HEYWAIT.TILECONFIG.elevationHint": "If set, this Tile will only trigger on tokens above elevation bottom and below elevation top. Leave empty to trigger at any elevation",
+  "HEYWAIT.TILECONFIG.UnlimitedWarn": "Unlimited Triggers can't be toggled, Disable unlimited triggers first!"
 }
